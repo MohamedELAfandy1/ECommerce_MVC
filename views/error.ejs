@@ -1,0 +1,10 @@
+<%- include('parts/header.ejs') %> 
+<%- include('parts/nav.ejs') %>
+<div class="container">
+    <% if (err) { %>
+        <p class="alert alert-danger"><%= err %></p>
+    <% } else { %>
+        <p class="alert alert-danger">Something Went Wrong</p>
+    <% } %>
+</div>
+<%- include('parts/footer.ejs') %>

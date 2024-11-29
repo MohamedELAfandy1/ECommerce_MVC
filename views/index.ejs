@@ -1,0 +1,64 @@
+<%- include('parts/header.ejs')%> <%- include('parts/nav.ejs')%>
+
+<div class="container mt-5">
+  <form action="/" method="GET">
+    <select name="category" class="form-control">
+      <option value="all">All</option>
+      <option value="clothes">Clothes</option>
+      <option value="phones">Phones</option>
+      <option value="computers">Computers</option>
+    </select>
+    <input type="submit" value="Filter" class="btn btn-primary" />
+  </form>
+  <%if(validationError){%>
+  <p class="alert alert-danger"><%=validationError.msg%></p>
+  <%}%>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% if(products.length === 0 ) {%>
+    <div class="alert alert-danger">There Is No Product</div>
+    <% }else{ %> <% products.forEach(product => { %>
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img
+          src="<%= product.image %>"
+          class="card-img-top"
+          alt="<%= product.name %>"
+        />
+        <div class="card-body">
+          <a href="/product/<%= product._id %>" class="card-title"
+            ><%= product.name %></a
+          >
+          <p class="card-text text-muted">
+            <strong>Category:</strong> <%= product.category %>
+          </p>
+          <p class="card-text"><%= product.description %></p>
+        </div>
+        <div
+          class="card-footer d-flex justify-content-between align-items-center"
+        >
+          <span class="text-success fw-bold">$<%= product.price %></span>
+        </div>
+        <form action="/cart" method="POST">
+          <input
+            type="number"
+            name="amount"
+            placeholder="Qty"
+            class="form-control mb-2"
+          />
+          <input type="hidden" name="productName" value="<%= product.name %>" />
+          <input
+            type="hidden"
+            name="productPrice"
+            value="<%= product.price %>"
+          />
+          <input type="hidden" name="productId" value="<%= product._id %>" />
+          <input type="hidden" name="redirectTo" value="/" />
+          <input type="submit" class="btn btn-primary" value="Add To Cart" />
+        </form>
+      </div>
+    </div>
+    <% }); %> <%}%>
+  </div>
+</div>
+<%- include('parts/footer.ejs')%>

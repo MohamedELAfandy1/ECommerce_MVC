@@ -1,0 +1,39 @@
+<%-include("./parts/header.ejs")%> <%-include("./parts/nav.ejs")%>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Order Form</h4>
+        </div>
+        <div class="card-body">
+          <% const actionUrl = (flag === "order") ? "/order/makeOrder" :
+          "/order/makeAllOrders"; %>
+
+          <form method="post" action="<%= actionUrl %>">
+            <div class="mb-3">
+              <label for="address" class="form-label">Delivery Address</label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                class="form-control"
+                placeholder="Enter your address"
+              />
+            </div>
+            <input type="hidden" name="cartId" value="<%=cartId%>" />
+            <input type="hidden" name="flag" value="<%=flag%>" />
+            <input type="submit" class="btn btn-success" value="Place Order" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if (validation) { %> <% validation.forEach(v => { %>
+
+  <p class="alert alert-danger"><%= v.msg %></p>
+  <% }) %> <% } %>
+</div>
+
+<%-include("./parts/footer.ejs")%>

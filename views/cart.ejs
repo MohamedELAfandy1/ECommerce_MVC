@@ -1,0 +1,97 @@
+<%- include("parts/header.ejs") %> 
+<%- include("parts/nav.ejs") %>
+
+<div class="container mt-5">
+  <% if (cart.length === 0) { %>
+    <p class="alert alert-danger">There are no items in the cart</p>
+  <% } else { %>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>No</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < cart.length; i++) { %>
+          <tr>
+            <form method="POST">
+              <td><%= i + 1 %></td>
+              <td><%= cart[i].name %></td>
+              <td>$<%= cart[i].price.toFixed(2) %></td>
+              <td>
+                <input
+                  type="number"
+                  name="amount"
+                  class="form-control"
+                  value="<%= cart[i].amount %>"
+                  min="1"
+                />
+              </td>
+              <td>$<%= (cart[i].price * cart[i].amount).toFixed(2) %></td>
+              <td>
+                <input type="hidden" name="cartId" value="<%= cart[i]._id %>" />
+                <input
+                  type="submit"
+                  class="btn btn-success"
+                  value="Save"
+                  formaction="/cart/save"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-danger"
+                  value="Delete"
+                  formaction="/cart/delete"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  value="Order"
+                  formaction="/order"
+                />
+                <input type="hidden" value="order" name="flag" />
+              </td>
+            </form>
+          </tr>
+        <% } %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            <form method="post" class="text-right">
+              <input
+                type="submit"
+                class="btn btn-danger"
+                value="Delete All"
+                formaction="/cart/deleteAll"
+              />
+              <input
+                type="submit"
+                class="btn btn-primary"
+                value="Order All"
+                formaction="/order/orderAll"
+              />
+              <input type="hidden" value="orderAll" name="flag" />
+            </form>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  <% } %>
+
+  <!-- Display Validation Error -->
+  <% if (validationError) { %>
+    <p class="alert alert-danger"><%= validationError %></p>
+  <% } %>
+
+  <!-- Display Stock Error -->
+  <% if (stockError) { %>
+    <p class="alert alert-danger"><%= stockError %></p>
+  <% } %>
+</div>
+
+<%- include("parts/footer.ejs") %>

@@ -1,0 +1,64 @@
+<%- include("parts/header.ejs") %> <%- include("parts/nav.ejs") %>
+
+<div class="container mt-5">
+  <% if (orders.length === 0) { %>
+  <p class="alert alert-danger">There are no Orders</p>
+  <% } else { %>
+    <form action="/admin/manageOrders" method="GET" class="d-flex align-items-center justify-content-center gap-3 mb-4">
+        <div class="btn-group btn-group-lg" role="group" aria-label="Order Status">
+          <input type="submit" value="All" class="btn btn-primary" />
+          <input type="submit" name="status" value="pending" class="btn btn-outline-primary" />
+          <input type="submit" name="status" value="sent" class="btn btn-outline-primary" />
+          <input type="submit" name="status" value="completed" class="btn btn-outline-primary" />
+        </div>
+      </form>
+  
+      <!-- Email Search Form -->
+      <form action="/admin/manageOrders" method="GET" class="d-flex align-items-center justify-content-center gap-2 mb-4">
+        <div class="input-group input-group-lg">
+          <input type="text" name="email" placeholder="Enter user email" class="form-control" />
+          <input type="submit" class="btn btn-outline-primary" value="Search">
+        </div>
+      </form>            
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>No</th>
+        <th>UserId</th>
+        <th>Product Name</th>
+        <th>Amount</th>
+        <th>Cost</th>
+        <th>Address</th>
+        <th>Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < orders.length; i++) { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%=emails[i]%></td>
+        <td><%= orders[i].name %></td>
+        <td><%= orders[i].amount %></td>
+        <td>$<%= orders[i].price.toFixed(2) %></td>
+        <td><%= orders[i].address %></td>
+        <td><%= new Date(orders[i].timestamp).toLocaleString() %></td>
+        <td>
+            <form action="/admin/updateStatus" method="POST">
+                <input type="hidden" name="orderId" value="<%= orders[i]._id %>">
+                <select class="form-control" name="status" size="1">
+                  <option value="pending" <%= orders[i].status === 'pending' ? 'selected' : '' %>>Pending</option>
+                  <option value="sent" <%= orders[i].status === 'sent' ? 'selected' : '' %>>Sent</option>
+                  <option value="completed" <%= orders[i].status === 'compeleted' ? 'selected' : '' %>>Completed</option>
+                </select>
+                <input type="submit" class="btn btn-primary mt-2" value="Update">
+              </form>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include("parts/footer.ejs") %>

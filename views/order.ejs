@@ -1,0 +1,37 @@
+<%- include("parts/header.ejs") %>
+<%- include("parts/nav.ejs") %>
+
+<div class="container mt-5">
+  <% if (orders.length === 0) { %>
+  <p class="alert alert-danger">There are no items in the cart</p>
+  <% } else { %>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Amount</th>
+        <th>Cost</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < orders.length; i++) { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= orders[i].name %></td>
+        <td><%= orders[i].amount %></td>
+        <td>$<%= orders[i].price.toFixed(2) %></td>
+        <td><%= orders[i].address %></td>
+        <td><%= orders[i].status %></td>
+        <td><%= orders[i].timestamp %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<%- include("parts/footer.ejs") %>

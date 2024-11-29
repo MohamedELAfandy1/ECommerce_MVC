@@ -1,0 +1,109 @@
+<%- include("parts/header.ejs") %> <%- include("parts/nav.ejs") %>
+
+<div class="container mt-5">
+  <h2 class="text-center">Add Product</h2>
+  <!-- application/x-www-form-urlencoded   =>  [Default way for encypting form data] [Cannot used for uploading files] [use bodyParser] -->
+  <!-- multipart/form-data                 =>  [used for uploading files] [use multer]-->
+  <form action="/admin/add" method="POST" enctype="multipart/form-data">
+    <!-- Product Name -->
+    <div class="form-group">
+      <label for="productName">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productName"
+        name="name"
+        placeholder="Enter product name"
+      />
+    </div>
+    <% let nameError = validation.find(err=>err.path==='name') %>
+    <%if(nameError){%>
+    <p class="alert alert-danger"><%=nameError.msg%></p>
+    <% } %>
+
+    <!-- Product Amount -->
+    <div class="form-group mt-3">
+      <label for="productAmount">Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="productAmount"
+        name="amount"
+        placeholder="Enter amount"
+      />
+    </div>
+    <% let amountError = validation.find(err=>err.path==='amount') %>
+    <%if(amountError){%>
+    <p class="alert alert-danger"><%=amountError.msg%></p>
+    <% } %>
+
+    <!-- Product ID (Optional or hidden if auto-generated) -->
+    <input type="hidden" name="product_id" />
+
+    <!-- Product Price -->
+    <div class="form-group mt-3">
+      <label for="productPrice">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="productPrice"
+        name="price"
+        placeholder="Enter price"
+      />
+    </div>
+    <% let priceError = validation.find(err=>err.path==='price') %>
+    <%if(priceError){%>
+    <p class="alert alert-danger"><%=priceError.msg%></p>
+    <% } %>
+
+    <!-- Product Description -->
+    <div class="form-group mt-3">
+      <label for="productDescription">Description</label>
+      <textarea
+        class="form-control"
+        id="productDescription"
+        name="description"
+        placeholder="Enter product description"
+        rows="3"
+      ></textarea>
+    </div>
+    <% let descriptionError = validation.find(err=>err.path==='description') %>
+    <%if(descriptionError){%>
+    <p class="alert alert-danger"><%=descriptionError.msg%></p>
+    <% } %>
+
+    <!-- Product Image URL -->
+    <div class="form-group mt-3">
+      <label for="productImage">Product Image</label>
+      <input type="file" class="form-control" id="productImage" name="image" />
+    </div>
+    <% let imageError = validation.find(err=>err.path==='image') %>
+    <%if(imageError){%>
+    <p class="alert alert-danger"><%=imageError.msg%></p>
+    <% } %>
+
+    <!-- Product Categories (Multi-select) -->
+    <div class="form-group mt-3">
+      <label for="productCategories">Categories</label>
+      <select
+        class="form-control"
+        id="productCategories"
+        name="category"
+        size="1"
+      >
+        <option value="">Select a category</option>
+        <option value="computers">Computers</option>
+        <option value="clothes">Clothes</option>
+        <option value="phones">Phones</option>
+      </select>
+    </div>
+    <% let categoryError = validation.find(err=>err.path==='category') %>
+    <%if(categoryError){%>
+    <p class="alert alert-danger"><%=categoryError.msg%></p>
+    <% } %>
+
+    <button type="submit" class="btn btn-primary mt-4">Add Product</button>
+  </form>
+</div>
+
+<%- include("parts/footer.ejs") %>

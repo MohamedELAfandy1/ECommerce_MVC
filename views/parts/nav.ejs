@@ -1,0 +1,100 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+      <i class="bi bi-shop me-2"></i> MyStore
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Home-Page' ? 'active' : '' %> fw-semibold"
+            aria-current="page"
+            href="/"
+          >
+            <i class="bi bi-house-door"></i> Home
+          </a>
+        </li>
+        <% if(isUser){ %>
+
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Cart-Page' ? 'active' : '' %>"
+            href="/cart"
+          >
+            <i class="bi bi-cart"></i> Cart
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Order-Page' ? 'active' : '' %>"
+            href="/order"
+          >
+            <i class="bi bi-receipt"></i> Orders
+          </a>
+        </li>
+        <!-- Logout Form -->
+        <li class="nav-item">
+          <form
+            action="/logout"
+            method="POST"
+            class="d-flex align-items-center"
+          >
+            <input type="submit" class="btn btn-danger" value="Logout" />
+          </form>
+        </li>
+
+        <%}else{%>
+
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Login-Page' ? 'active' : '' %>"
+            href="/login"
+          >
+            <i class="bi bi-box-arrow-in-right"></i> Login
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Register-Page' ? 'active' : '' %>"
+            href="/signUp"
+          >
+            <i class="bi bi-person-plus"></i> Sign Up
+          </a>
+        </li>
+        <%}%>
+      </ul>
+      <% if(isAdmin==true){%>
+      <ul class="navbar-nav ms-auto">
+        <li
+          class="nav-item"
+        >
+          <a class="nav-link <%=pageTitle === 'Add Product-Page' ? 'active' : '' %>" href="/admin/add" >
+            <i class="bi bi-plus-circle"></i> Add Product
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%=pageTitle === 'Manage Orders-Page' ? 'active' : ''%>"
+            href="/admin/manageOrders"
+          >
+            <i class="bi bi-clipboard-check"></i> Manage Orders
+          </a>
+        </li>
+      </ul>
+      <%}%>
+    </div>
+  </div>
+</nav>

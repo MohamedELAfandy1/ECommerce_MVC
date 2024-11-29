@@ -1,0 +1,88 @@
+<%- include("parts/header.ejs") %> <%- include("parts/nav.ejs") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="text-center">Register</h4>
+        </div>
+        <div class="card-body">
+          <form action="/signUp" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+              />
+            </div>
+            <% let nameError = validation.find(err => err.path === 'name'); %>
+            <% if (nameError) { %>
+            <p class="alert alert-danger mt-3"><%= nameError.msg %></p>
+            <% } %>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+              />
+            </div>
+            <% let emailError = validation.find(err => err.path === 'email'); %>
+            <% if (emailError) { %>
+            <p class="alert alert-danger mt-3"><%= emailError.msg %></p>
+            <% } %>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+              />
+            </div>
+            <% let passError = validation.find(err => err.path === 'password');
+            %> <% if (passError) { %>
+            <p class="alert alert-danger mt-3"><%= passError.msg %></p>
+            <% } %>
+
+            <div class="mb-3">
+              <label for="passwordConfirm" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                placeholder="Confirm password"
+              />
+            </div>
+            <% let passConfirmError = validation.find(err => err.path ===
+            'passwordConfirm'); %> <% if (passConfirmError) { %>
+            <p class="alert alert-danger mt-3"><%= passConfirmError.msg %></p>
+            <% } %>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+          <% if (authError) { %>
+          <p class="alert alert-danger mt-3"><%= authError %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("parts/footer.ejs") %>
